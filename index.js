@@ -65,7 +65,7 @@ async function updatePresence() {
             };
             
             rpc.setActivity(presence);
-            console.log(`✅ Now playing: ${musicInfo.name} by ${musicInfo.artist}`);
+            console.log(`Now playing: ${musicInfo.name} by ${musicInfo.artist}`);
         } else if (musicInfo.paused) {
             const presence = {
                 details: `${musicInfo.name}`,
@@ -78,11 +78,11 @@ async function updatePresence() {
             };
             
             rpc.setActivity(presence);
-            console.log(`⏸️  Paused: ${musicInfo.name} by ${musicInfo.artist}`);
+            console.log(`Paused: ${musicInfo.name} by ${musicInfo.artist}`);
         } else {
             // Clear presence when not playing
             rpc.clearActivity();
-            console.log('🎵 No music playing');
+            console.log('No music currently playing');
         }
     } catch (error) {
         console.error('Error updating presence:', error);
@@ -91,15 +91,15 @@ async function updatePresence() {
 
 // Main function
 async function main() {
-    console.log('🚀 Starting Discord Apple Music Presence...');
-    console.log('📝 Make sure to:');
+    console.log('Starting Discord Apple Music Presence...');
+    console.log('Prerequisites checklist:');
     console.log('   1. Replace CLIENT_ID with your Discord App ID');
     console.log('   2. Have Apple Music (Music app) running');
     console.log('   3. Have Discord running\n');
     
     try {
         await rpc.login({ clientId: CLIENT_ID });
-        console.log('✅ Connected to Discord!\n');
+        console.log('Successfully connected to Discord!\n');
         
         // Initial update
         await updatePresence();
@@ -108,18 +108,18 @@ async function main() {
         setInterval(updatePresence, UPDATE_INTERVAL);
         
     } catch (error) {
-        console.error('❌ Failed to connect to Discord:', error);
-        console.log('\nMake sure:');
-        console.log('1. Discord is running');
-        console.log('2. You have replaced the CLIENT_ID with a valid Discord App ID');
-        console.log('3. You created an app at https://discord.com/developers/applications');
+        console.error('Failed to connect to Discord:', error);
+        console.log('\nTroubleshooting checklist:');
+        console.log('1. Discord desktop app is running');
+        console.log('2. CLIENT_ID has been replaced with a valid Discord App ID');
+        console.log('3. Discord application created at https://discord.com/developers/applications');
         process.exit(1);
     }
 }
 
 // Handle graceful shutdown
 process.on('SIGINT', () => {
-    console.log('\n👋 Shutting down...');
+    console.log('\nShutting down gracefully...');
     rpc.clearActivity();
     rpc.destroy();
     process.exit(0);

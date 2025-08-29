@@ -1,26 +1,29 @@
-# Discord Apple Music Rich Presence 🎵
+````markdown
+# Discord Apple Music Rich Presence
 
-> I created this app to share my Apple Music listening activity on Discord! Feel free to use it for your own Discord profile.
+> Bridge the gap between Apple Music and Discord. Share your music taste with friends in real-time.
 
 **Created by:** Dhanush Amirineni  
 **Purpose:** Display your Apple Music listening activity as Discord Rich Presence status  
 **Platform:** macOS only (uses native Apple Music integration)
 
-## Why I Built This
+## The Story Behind This Project
 
-I wanted my Discord friends to see what I'm listening to on Apple Music, just like Spotify users can. So I built this lightweight app that runs in the background and updates your Discord status with your current Apple Music track!
+Ever felt left out when your Spotify-using friends could show off their music on Discord, but you couldn't do the same with Apple Music? I felt the same way. That's why I built this lightweight application that runs quietly in the background, bridging Apple Music with Discord's Rich Presence feature.
 
-## Want to Use This?
+Now you can share your musical journey with friends, just like Spotify users have been doing all along.
 
-Feel free to clone this repo and set it up for yourself! Instructions below 👇
+## Ready to Get Started?
 
-## Features
+This project is open source and ready for you to use. Follow the setup guide below and you'll be sharing your Apple Music activity in minutes.
 
-- 🎵 Shows currently playing song, artist, and album
-- ⏱️ Displays playback progress with time remaining
-- ⏸️ Shows paused state
-- 🔄 Updates every 5 seconds
-- 🍎 Native Apple Music integration using AppleScript
+## What This App Does
+
+- Shows currently playing song, artist, and album on your Discord profile
+- Displays playback progress with accurate time remaining
+- Indicates when music is paused
+- Updates every 5 seconds for real-time accuracy
+- Uses native Apple Music integration through AppleScript for reliability
 
 ## Prerequisites
 
@@ -45,9 +48,9 @@ Feel free to clone this repo and set it up for yourself! Instructions below 👇
 ### Step 2: Configure the Application
 
 1. Open `index.js` in a text editor
-2. Replace `CLIENT_ID` value with your Discord Application ID:
+2. Replace the `CLIENT_ID` value with your Discord Application ID:
    ```javascript
-   const CLIENT_ID = 'YOUR_APPLICATION_ID_HERE';
+   const CLIENT_ID = "YOUR_APPLICATION_ID_HERE";
    ```
 
 ### Step 3: Install Dependencies
@@ -68,16 +71,18 @@ Or run directly with Node:
 node index.js
 ```
 
-## Usage
+## How to Use
 
-1. Make sure Discord is running
-2. Open Apple Music and play a song
-3. Start the application
-4. Your Discord status will now show what you're listening to!
+1. Make sure Discord is running on your computer
+2. Open Apple Music and start playing a song
+3. Launch the application using the commands above
+4. Check your Discord profile - your music status should now be visible
 
-## Running in Background
+## Background Operation
 
-### Option 1: Using PM2 (Recommended)
+### Method 1: Using PM2 (Recommended for Developers)
+
+PM2 is a process manager that keeps your app running even if it crashes.
 
 Install PM2 globally:
 ```bash
@@ -89,7 +94,7 @@ Start the app:
 pm2 start index.js --name "apple-music-discord"
 ```
 
-Other PM2 commands:
+Useful PM2 commands:
 ```bash
 pm2 stop apple-music-discord    # Stop the app
 pm2 restart apple-music-discord  # Restart the app
@@ -97,21 +102,23 @@ pm2 logs apple-music-discord     # View logs
 pm2 delete apple-music-discord   # Remove from PM2
 ```
 
-### Option 2: Using nohup
+### Method 2: Using nohup (Simple Background Process)
 
 ```bash
 nohup node index.js > output.log 2>&1 &
 ```
 
-To stop:
+To stop the process:
 ```bash
 # Find the process ID
 ps aux | grep "node index.js"
-# Kill the process
+# Kill the process using the PID
 kill [PID]
 ```
 
-### Option 3: Create a Launch Agent (macOS)
+### Method 3: macOS Launch Agent (Auto-start on Login)
+
+For advanced users who want the app to start automatically when they log in:
 
 Create a plist file at `~/Library/LaunchAgents/com.discord.apple-music.plist`:
 
@@ -125,7 +132,7 @@ Create a plist file at `~/Library/LaunchAgents/com.discord.apple-music.plist`:
     <key>ProgramArguments</key>
     <array>
         <string>/usr/local/bin/node</string>
-        <string>/Users/dhanushamirineni/Developer/projects/discord-apple-music-presence/index.js</string>
+        <string>/path/to/your/project/index.js</string>
     </array>
     <key>RunAtLoad</key>
     <true/>
@@ -144,41 +151,64 @@ Load the launch agent:
 launchctl load ~/Library/LaunchAgents/com.discord.apple-music.plist
 ```
 
-## Customization
+## Customization Options
 
-### Change Update Interval
+### Adjust Update Frequency
 
-In `index.js`, modify the `UPDATE_INTERVAL` constant:
+Want faster or slower updates? Modify the `UPDATE_INTERVAL` in `index.js`:
+
 ```javascript
-const UPDATE_INTERVAL = 5000; // milliseconds
+const UPDATE_INTERVAL = 5000; // Change this value (in milliseconds)
 ```
 
-### Modify Display Format
+### Customize Display Format
 
-Edit the presence object in the `updatePresence()` function to customize what's shown.
+You can modify what information appears on Discord by editing the presence object in the `updatePresence()` function.
 
-## Troubleshooting
+## Troubleshooting Common Issues
 
 ### "Failed to connect to Discord"
-- Make sure Discord desktop app is running
-- Verify you've replaced the CLIENT_ID with your actual Discord App ID
-- Check that Discord Rich Presence is enabled in Discord settings
+
+This usually means one of these things:
+- Discord desktop app isn't running
+- The CLIENT_ID hasn't been replaced with your actual Discord App ID
+- Discord Rich Presence is disabled in Discord settings
 
 ### "Error getting Apple Music info"
-- Ensure Apple Music (Music app) is installed
-- Grant Terminal/Terminal app permission to control Apple Music in System Preferences → Security & Privacy → Privacy → Automation
 
-### No status showing
-- Check that a song is actually playing in Apple Music
-- Look at the console output for any error messages
-- Try restarting both Discord and the script
+Check these potential solutions:
+- Verify Apple Music (Music app) is installed and working
+- Grant permission for Terminal to control Apple Music in System Preferences > Security & Privacy > Privacy > Automation
+- Make sure a song is actually playing in Apple Music
 
-## Privacy & Security
+### Discord status not showing
 
-- This app only reads your currently playing track information
-- No data is sent anywhere except to Discord for presence updates
-- All processing happens locally on your machine
+Try these debugging steps:
+- Check the console output for error messages
+- Restart both Discord and the application
+- Verify that Rich Presence is enabled in your Discord settings
+- Make sure you're using the Discord desktop app, not the web version
+
+## Privacy and Data Handling
+
+Your privacy matters. Here's what this application does and doesn't do:
+
+**What it accesses:**
+- Currently playing track information from Apple Music
+- Basic playback state (playing, paused, stopped)
+
+**What it doesn't do:**
+- Store or save any of your music data
+- Send information to any servers except Discord
+- Access your music library or playlists
+- Track your listening habits
+
+All processing happens locally on your machine, and data only goes to Discord for displaying your status.
+
+## Contributing
+
+Found a bug or have an idea for improvement? Contributions are welcome! Feel free to open an issue or submit a pull request.
 
 ## License
 
-MIT
+MIT License - feel free to use this project however you'd like.
