@@ -2,7 +2,7 @@
 
 > I created this app to share my Apple Music listening activity on Discord! Feel free to use it for your own Discord profile.
 
-**Created by:** Dhanusha Mirineni  
+**Created by:** Dhanush Amirineni  
 **Purpose:** Display your Apple Music listening activity as Discord Rich Presence status  
 **Platform:** macOS only (uses native Apple Music integration)
 
